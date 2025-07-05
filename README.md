@@ -1,0 +1,1 @@
+consultoryn-nextjs-dj
