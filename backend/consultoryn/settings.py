@@ -9,8 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -67,7 +66,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'OPTIONS': {'min_length': 8}
     },
     {
-        'NAME': 'accounts.validators.validate_password_strength',
+        'NAME': 'accounts.validators.PasswordStrengthValidator',
     }
 ]
 
