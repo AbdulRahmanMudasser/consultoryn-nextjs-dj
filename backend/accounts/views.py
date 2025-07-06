@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
 from rest_framework.authtoken.models import Token
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .models import User, PasswordResetToken
 from .serializers import (
     UserSerializer, RegisterSerializer, LoginSerializer,
@@ -15,6 +17,7 @@ from .serializers import (
 
 logger = logging.getLogger('accounts')
 
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(views.APIView):
     permission_classes = [AllowAny]
     
@@ -30,6 +33,7 @@ class RegisterView(views.APIView):
         logger.error(f"Registration failed: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(views.APIView):
     permission_classes = [AllowAny]
     
@@ -60,6 +64,7 @@ class LoginView(views.APIView):
         logger.error(f"Login failed: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LogoutView(views.APIView):
     permission_classes = [IsAuthenticated]
     
@@ -69,6 +74,7 @@ class LogoutView(views.APIView):
         logout(request)
         return Response({'message': 'Logout successful'})
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PasswordResetRequestView(views.APIView):
     permission_classes = [AllowAny]
     
@@ -98,6 +104,7 @@ class PasswordResetRequestView(views.APIView):
         logger.error(f"Password reset request failed: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PasswordResetView(views.APIView):
     permission_classes = [AllowAny]
     
